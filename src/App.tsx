@@ -15,7 +15,7 @@ import HomePage from './molecules/home-page'
 import FeedbackPage from './molecules/feedback'
 import ShareButtons from './molecules/share-buttons'
 import { ChatUI } from './molecules/chat-ui'
-import AdminRoute from './components/InputForm'
+import AdminRoute from './components/InputForm' 8
 
 function App() {
   return (
