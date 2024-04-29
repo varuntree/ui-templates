@@ -3,45 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Manager</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <title>Navbar Preview Component</title>
+    <!-- Load React and ReactDOM from CDN for simplicity -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Load Babel for JSX parsing -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Decap CMS and your preview component will be defined in the script below -->
 </head>
 <body>
-    <div id="app"></div>
-    <!-- Import the CMS library -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <!-- Your built Vite bundle that includes the CMS setup and component logic -->
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-<script>
-  // Register a custom preview style
+    <div id="root"></div> <!-- React will attach to this div -->
+    <script type="text/babel">
+        // Load Decap CMS (Assuming it exposes createClass and other necessary functionality)
+        // Mocking createClass from Decap CMS, replace with actual import when available
+        const { createClass } = { 
+            createClass: React.createClass 
+        };
 
-  // Create a custom preview component for a collection named "buttons"
-  var ButtonPreview = createClass({
-    render: function() {
-      var entry = this.props.entry;
-      var buttonColor = entry.getIn(['data', 'buttoncolor']);
-      var size = entry.getIn(['data', 'size']);
-      var edge = entry.getIn(['data', 'edge']);
+        const NavbarPreview = createClass({
+            render() {
+                const entry = this.props.entry;
+                const buttonColor = entry.getIn(['data', 'buttonConfig', 'color']);
+                const buttonSize = entry.getIn(['data', 'buttonConfig', 'size']);
+                const buttonEdge = entry.getIn(['data', 'buttonConfig', 'edge']);
 
-      var buttonStyle = {
-        backgroundColor: buttonColor,
-        padding: size === 'small' ? '8px 16px' : size === 'medium' ? '12px 24px' : '16px 32px',
-        borderRadius: edge === 'rounded' ? '4px' : edge === 'pill' ? '20px' : '0',
-        color: 'white',
-        fontWeight: 'bold',
-        border: 'none',
-        cursor: 'pointer'
-      };
+                const buttonStyle = {
+                    backgroundColor: buttonColor,
+                    padding: buttonSize === 'large' ? '10px 20px' : '5px 10px',
+                    borderRadius: buttonEdge === 'rounded' ? '15px' : '0px',
+                    border: 'none',
+                    color: 'white',
+                    cursor: 'pointer'
+                };
 
-      return h('div', {},
-        h('h2', {}, 'Button Preview'),
-        h('button', {style: buttonStyle}, entry.getIn(['data', 'label']))
-      );
-    }
-  });
+                return (
+                    <div>
+                        <button style={buttonStyle}>Click Me</button>
+                    </div>
+                );
+            }
+        });
 
-  // Register the custom preview template for the "buttons" collection
-  CMS.registerPreviewTemplate("buttons", ButtonPreview);
-</script>
+        // Example entry data for the component to render
+        const sampleEntry = {
+            getIn: (path) => ({
+                'buttonConfig.color': 'blue',
+                'buttonConfig.size': 'large',
+                'buttonConfig.edge': 'rounded'
+            }[path.join('.')])
+        };
+
+        // Mount the React component on the page
+        ReactDOM.render(
+            <NavbarPreview entry={sampleEntry} />,
+            document.getElementById('root')
+        );
+    </script>
 </body>
 </html>
