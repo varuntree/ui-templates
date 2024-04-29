@@ -3,4 +3,4 @@ import { NavbarPreview } from './preview-templates/NavbarPreview'
 
 
 
-CMS.registerPreviewTemplate('navbar', NavbarPreview)
+CMS.registerPreviewTemplate('config', NavbarPreview)
