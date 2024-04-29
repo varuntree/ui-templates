@@ -1,8 +1,11 @@
 ---
 buttonConfig:
-  color: "primary"
-  size: "large"
-  edge: "start"
+  color: primary
+  size: large
+  edge: start
+buttonConfig.color: primary
+buttonConfig.size: helo
+buttonConfig.edge: thisistest
 ---
 
 # Description
