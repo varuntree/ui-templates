@@ -1,4 +1,4 @@
-import { NavbarCms } from "../../cms_molecules/Navbar"
+import { NavbarCms } from "../../../src/cms_molecules/Navbar"
 
 
 export function NavbarPreview({entry}:{entry: any}){

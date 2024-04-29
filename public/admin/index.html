@@ -9,6 +9,7 @@
   </head>
   <body>
     <script>
+      CMS.registerPreviewTemplate('navbar', NavbarPreview)
         if (window.netlifyIdentity) {
           window.netlifyIdentity.on("init", (user) => {
             if (!user) {
