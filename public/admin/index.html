@@ -1,62 +1,16 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Manager</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
-    <script>
-      console.log("this is in the hml page")
-        if (window.netlifyIdentity) {
-          window.netlifyIdentity.on("init", (user) => {
-            if (!user) {
-              window.netlifyIdentity.on("login", () => {
-                document.location.href = "/admin/";
-              });
-            }
-          });
-        }
-      </script>
-    <!-- Include the script that builds the page and powers Decap CMS -->
+</head>
+<body>
+    <div id="app"></div>
+    <!-- Import the CMS library -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script type="text/babel">
-      console.log("insideview")
-      const { useState, useEffect } = React;
-
-      // Dummy Navbar component for demonstration purposes
-      const Navbar = ({ color, size, edge }) => (
-        <div style={{color, border: `2px solid ${color}`, padding: '8px'}}>
-          <h1>Navbar Preview</h1>
-          <p>Size: {size}</p>
-          <p>Edge: {edge}</p>
-        </div>
-      );
-
-      // NavbarPreview component as defined in your request
-      const NavbarPreview = ({ entry }) => {
-        const data = entry.getIn(['data']).toJS(); // Converts Immutable.Map to JavaScript object
-
-        // Ensure that data.buttonConfig exists or provide defaults
-        const buttonConfig = data.buttonConfig || { color: 'default', size: 'medium', edge: null };
-
-        return (
-          <Navbar
-            color={buttonConfig.color}
-            size={buttonConfig.size}
-            edge={buttonConfig.edge}
-          />
-        );
-      };
-
-      // Check if CMS is available and register the preview template
-      if (typeof CMS !== 'undefined') {
-        CMS.registerPreviewTemplate('navbar', NavbarPreview);
-      } else {
-        console.error('CMS not defined.');
-      }
-    </script>
-  </body>
+    <!-- Your built Vite bundle that includes the CMS setup and component logic -->
+    <script type="module" src="/src/cmsSetup.js"></script>
+</body>
 </html>
