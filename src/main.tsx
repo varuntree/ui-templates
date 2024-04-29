@@ -10,11 +10,7 @@ import CustomThemeProvider from './molecules/theme-provider/index.tsx'
 
 import ConfigContext from './context/configContext.tsx'
 
-import CMS from 'decap-cms-app';
-import { NavbarPreview } from './NavbarPreview.tsx'
 
-
-CMS.registerPreviewTemplate('navbar', NavbarPreview);
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ConfigContext>
