@@ -15,4 +15,4 @@ collections:
           - {label: "Button Color", name: "buttonConfig.color", widget: "string"}
           - {label: "Button Size", name: "buttonConfig.size", widget: "string"}
           - {label: "Button Edge", name: "buttonConfig.edge", widget: "string"}
-
+        preview_path: "public/cms/preview-templates/NavbarPreview.tsx"
