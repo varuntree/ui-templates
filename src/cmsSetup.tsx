@@ -1,6 +1,6 @@
 import { NavbarCms } from './cms_molecules/Navbar/index';
 import CMS from 'decap-cms-app';
-
+console.log("the compnenis loded")
 export function NavbarPreview({ entry }:{entry:any}) {
     const data = entry.getIn(['data']).toJS();
     return (
