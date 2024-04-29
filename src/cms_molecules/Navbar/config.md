@@ -1,8 +1,8 @@
 ---
 buttonConfig:
-  color: "primary"
-  size: "large"
-  edge: "start"
+  color: primary
+  size: large
+  edge: start
 ---
 
 # Description
