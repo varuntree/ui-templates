@@ -1,63 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar Preview Component</title>
-    <!-- Load React and ReactDOM from CDN for simplicity -->
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <!-- Load Babel for JSX parsing -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- Decap CMS and your preview component will be defined in the script below -->
-</head>
-<body>
-    <div id="root"></div> <!-- React will attach to this div -->
-    <script type="text/babel">
-        // Load Decap CMS (Assuming it exposes createClass and other necessary functionality)
-        // Mocking createClass from Decap CMS, replace with actual import when available
-        const { createClass } = { 
-            createClass: React.createClass 
-        };
-
-        const NavbarPreview = createClass({
-            render() {
-                const entry = this.props.entry;
-                const buttonColor = entry.getIn(['data', 'buttonConfig', 'color']);
-                const buttonSize = entry.getIn(['data', 'buttonConfig', 'size']);
-                const buttonEdge = entry.getIn(['data', 'buttonConfig', 'edge']);
-
-                const buttonStyle = {
-                    backgroundColor: buttonColor,
-                    padding: buttonSize === 'large' ? '10px 20px' : '5px 10px',
-                    borderRadius: buttonEdge === 'rounded' ? '15px' : '0px',
-                    border: 'none',
-                    color: 'white',
-                    cursor: 'pointer'
-                };
-
-                return (
-                    <div>
-                        <button style={buttonStyle}>Click Me</button>
-                    </div>
-                );
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Content Manager</title>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  </head>
+  <body>
+    <script>
+      console.log("this is in the hml page")
+        if (window.netlifyIdentity) {
+          window.netlifyIdentity.on("init", (user) => {
+            if (!user) {
+              window.netlifyIdentity.on("login", () => {
+                document.location.href = "/admin/";
+              });
             }
-        });
+          });
+        }
+      </script>
+    <!-- Include the script that builds the page and powers Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script type="text/babel">
+      console.log("insideview")
+      const { useState, useEffect } = React;
 
-        // Example entry data for the component to render
-        const sampleEntry = {
-            getIn: (path) => ({
-                'buttonConfig.color': 'blue',
-                'buttonConfig.size': 'large',
-                'buttonConfig.edge': 'rounded'
-            }[path.join('.')])
-        };
+      // Dummy Navbar component for demonstration purposes
+      const Navbar = ({ color, size, edge }) => (
+        <div style={{color, border: `2px solid ${color}`, padding: '8px'}}>
+          <h1>Navbar Preview</h1>
+          <p>Size: {size}</p>
+          <p>Edge: {edge}</p>
+        </div>
+      );
 
-        // Mount the React component on the page
-        ReactDOM.render(
-            <NavbarPreview entry={sampleEntry} />,
-            document.getElementById('root')
+      // NavbarPreview component as defined in your request
+      const NavbarPreview = ({ entry }) => {
+        const data = entry.getIn(['data']).toJS(); // Converts Immutable.Map to JavaScript object
+
+        // Ensure that data.buttonConfig exists or provide defaults
+        const buttonConfig = data.buttonConfig || { color: 'default', size: 'medium', edge: null };
+
+        return (
+          <Navbar
+            color={buttonConfig.color}
+            size={buttonConfig.size}
+            edge={buttonConfig.edge}
+          />
         );
+      };
+
+      // Check if CMS is available and register the preview template
+      if (typeof CMS !== 'undefined') {
+        CMS.registerPreviewTemplate('navbar', NavbarPreview);
+      } else {
+        console.error('CMS not defined.');
+      }
     </script>
-</body>
+  </body>
 </html>
