@@ -22,6 +22,41 @@
       </script>
     <!-- Include the script that builds the page and powers Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <script src="../cms/cms.ts"></script>
+    <script type="text/babel">
+      console.log("insideview")
+      const { useState, useEffect } = React;
+
+      // Dummy Navbar component for demonstration purposes
+      const Navbar = ({ color, size, edge }) => (
+        <div style={{color, border: `2px solid ${color}`, padding: '8px'}}>
+          <h1>Navbar Preview</h1>
+          <p>Size: {size}</p>
+          <p>Edge: {edge}</p>
+        </div>
+      );
+
+      // NavbarPreview component as defined in your request
+      const NavbarPreview = ({ entry }) => {
+        const data = entry.getIn(['data']).toJS(); // Converts Immutable.Map to JavaScript object
+
+        // Ensure that data.buttonConfig exists or provide defaults
+        const buttonConfig = data.buttonConfig || { color: 'default', size: 'medium', edge: null };
+
+        return (
+          <Navbar
+            color={buttonConfig.color}
+            size={buttonConfig.size}
+            edge={buttonConfig.edge}
+          />
+        );
+      };
+
+      // Check if CMS is available and register the preview template
+      if (typeof CMS !== 'undefined') {
+        CMS.registerPreviewTemplate('navbar', NavbarPreview);
+      } else {
+        console.error('CMS not defined.');
+      }
+    </script>
   </body>
 </html>
