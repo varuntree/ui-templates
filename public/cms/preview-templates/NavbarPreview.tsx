@@ -10,6 +10,8 @@ export function NavbarPreview({entry}:{entry: any}){
                 color={data.buttonConfig.color}
                 edge={data.buttonConfig.edge}
             />
+            helo this is indeeed workding
+            <h1>this i sthe most intresting thing</h1>
         </div>
     )
 }
